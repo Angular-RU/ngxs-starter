@@ -1,9 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
+import { AppState } from './app.state';
+import { ZooState } from './zoo/zoo.state';
 
 @NgModule({
   declarations: [
@@ -12,7 +20,17 @@ import { RouterModule } from '@angular/router';
   imports: [
     BrowserModule,
     RouterModule,
-    AppRoutingModule
+    FormsModule,
+    AppRoutingModule,
+    NgxsModule.forRoot([AppState]),
+    NgxsLoggerPluginModule.forRoot({
+      collapsed: false,
+      disabled: environment.production
+    }),
+    NgxsReduxDevtoolsPluginModule.forRoot({
+      disabled: environment.production,
+    }),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
