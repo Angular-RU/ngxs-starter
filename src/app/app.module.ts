@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { AppState } from './app.state';
 import { ZooState } from './zoo/zoo.state';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ZooState } from './zoo/zoo.state';
     NgxsReduxDevtoolsPluginModule.forRoot({
       disabled: environment.production,
     }),
+    NgxsStoragePluginModule.forRoot(),
     HttpClientModule
   ],
   providers: [],

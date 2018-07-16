@@ -28,6 +28,10 @@ export class ZooState {
     @Action(AddGuest, { cancelUncompleted: false })
     addGuest(ctx: StateContext<ZooStateModel>, action: AddGuest) {
         return this.zooService.addGuest().pipe(tap((result: ResultUser) => {
+            // add 12k
+            // for (let index = 0; index < 10; index++) {
+            //     result.data.push(...result.data);
+            // }
             const state = ctx.getState();
             state.pageGuest[action.pageIndex].guests = [
                 ...state.pageGuest[action.pageIndex].guests,
@@ -37,6 +41,7 @@ export class ZooState {
                 ...state,
                 pageGuest: state.pageGuest
             });
+
         }));
     }
 
