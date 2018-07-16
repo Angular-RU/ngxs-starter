@@ -25,7 +25,7 @@ export class ZooState {
     @Selector() static pageGuest(state: ZooStateModel) {
         return state.pageGuest;
     }
-    @Action(AddGuest)
+    @Action(AddGuest, { cancelUncompleted: false })
     addGuest(ctx: StateContext<ZooStateModel>, action: AddGuest) {
         return this.zooService.addGuest().pipe(tap((result: ResultUser) => {
             const state = ctx.getState();
