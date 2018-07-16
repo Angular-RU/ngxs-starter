@@ -1,6 +1,6 @@
 import { ZooService } from './zoo.service';
-import { State } from '@ngxs/store';
-import { FeedAnimals, ZebraFood, FeedZebra } from './zoo.actions';
+import { State, Selector } from '@ngxs/store';
+import { AddGuest, ZebraFood, FeedZebra, ResultUser, Guest, RemoveGuest, PageGuest, AddPageGuest } from './zoo.actions';
 import { Action } from '@ngxs/store';
 import { StateContext } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { tap } from 'rxjs/operators';
 export interface ZooStateModel {
     feed: boolean;
     zebraFood: ZebraFood[];
-    feedAnimals: string[];
+    pageGuest: PageGuest[];
 }
 
 @State<ZooStateModel>({
@@ -16,26 +16,56 @@ export interface ZooStateModel {
     defaults: {
         feed: false,
         zebraFood: [],
-        feedAnimals: []
+        pageGuest: []
     }
 })
 export class ZooState {
     constructor(private zooService: ZooService) { }
 
-    @Action(FeedAnimals)
-    feedAnimals(ctx: StateContext<ZooStateModel>, action: FeedAnimals) {
-        return this.zooService.feed(action.animalsToFeed).pipe(tap((animalsToFeedResult) => {
+    @Selector() static pageGuest(state: ZooStateModel) {
+        return state.pageGuest;
+    }
+    @Action(AddGuest)
+    addGuest(ctx: StateContext<ZooStateModel>, action: AddGuest) {
+        return this.zooService.addGuest().pipe(tap((result: ResultUser) => {
             const state = ctx.getState();
+            state.pageGuest[action.pageIndex].guests = [
+                ...state.pageGuest[action.pageIndex].guests,
+                ...result.data
+            ];
             ctx.setState({
                 ...state,
-                feedAnimals: [
-                    ...state.feedAnimals,
-                    animalsToFeedResult,
+                pageGuest: state.pageGuest
+            });
+        }));
+    }
+
+    @Action(AddPageGuest)
+    addPageGuest(ctx: StateContext<ZooStateModel>) {
+        return this.zooService.addGuest().pipe(tap((result: ResultUser) => {
+            const state = ctx.getState();
+            const page = new PageGuest();
+            page.guests = result.data;
+            ctx.setState({
+                ...state,
+                pageGuest: [
+                    ...state.pageGuest,
+                    page
                 ]
             });
         }));
     }
 
+    @Action(RemoveGuest)
+    removeGuest(ctx: StateContext<ZooStateModel>, action: RemoveGuest) {
+        const state = ctx.getState();
+        state.pageGuest[action.pageIndex].guests.splice(action.index, 1);
+        ctx.patchState({
+            pageGuest: state.pageGuest
+        });
+
+    }
+    // not used
     @Action(FeedZebra)
     feedZebra(ctx: StateContext<ZooStateModel>, action: FeedZebra) {
         const state = ctx.getState();

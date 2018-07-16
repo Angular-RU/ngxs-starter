@@ -1,4 +1,13 @@
 <p>
   zoo works!
 </p>
-<button (click)="feed()">Feed</button>
+<div>
+  <button (click)="addPage()">addPage</button>
+
+  <div *ngFor="let item of (pageGuest$ | async); let pageIndex=index">
+    <div *ngFor="let guest of item?.guests; let guestIndex=index">
+        <button (click)="remove(pageIndex, item, guestIndex)">x</button>
+        {{guest | json}} pageIndex = {{pageIndex}} guestIndex = {{guestIndex}}
+    </div>
+    <button (click)="addGuest(pageIndex)">addGuest</button>
+  </div>

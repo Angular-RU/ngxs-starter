@@ -5,10 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ZooRoutes } from './zoo.routing';
 import { NgxsModule } from '@ngxs/store';
 import { ZooState } from './zoo.state';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     HttpClientModule,
     ZooRoutes,
     NgxsModule.forFeature([ZooState])
