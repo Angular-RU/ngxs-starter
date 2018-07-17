@@ -46,3 +46,8 @@ export class FeedZebra {
     static readonly type = '[Zoo] FeedZebra';
     constructor(public zebraToFeed: ZebraFood) { }
 }
+
+export class TestAction {
+    static readonly type = '[Zoo] TestAction';
+    constructor() { }
+}

@@ -1,0 +1,12 @@
+<div>
+  <p>
+    tickets works!
+    <br> {{ticketsState$ | async | json}}
+  </p>
+  <p>
+    testCount = {{ (ticketsState$ | async)?.testCount}} 
+    <br>
+    testCount = {{ testCount$ | async}}
+  </p>
+</div>
+<button (click)="test()" style="margin: 10px;">test</button>

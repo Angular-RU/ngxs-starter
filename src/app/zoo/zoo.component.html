@@ -1,13 +1,19 @@
-<p>
-  zoo works!
-</p>
 <div>
+  <p>
+    zoo works!
+  </p>
+  <p>
+    testCount = {{ (zooState$ | async)?.testCount}}
+  </p>
+</div>
+<div>
+  <button (click)="test()" style="margin: 10px;">test</button>
   <button (click)="addPage()">addPage</button>
 
   <div *ngFor="let item of (pageGuest$ | async); let pageIndex=index">
     <div *ngFor="let guest of item?.guests; let guestIndex=index">
-        <button (click)="remove(pageIndex, item, guestIndex)">x</button>
-        {{guest | json}} pageIndex = {{pageIndex}} guestIndex = {{guestIndex}}
+      <button (click)="remove(pageIndex, item, guestIndex)">x</button>
+      {{guest | json}} pageIndex = {{pageIndex}} guestIndex = {{guestIndex}}
     </div>
     <button (click)="addGuest(pageIndex)">addGuest</button>
   </div>

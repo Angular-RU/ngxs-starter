@@ -1,31 +1,46 @@
 import { ZooService } from './zoo.service';
-import { State, Selector } from '@ngxs/store';
-import { AddGuest, ZebraFood, FeedZebra, ResultUser, Guest, RemoveGuest, PageGuest, AddPageGuest } from './zoo.actions';
-import { Action } from '@ngxs/store';
+import { State, Selector, NgxsOnInit, Actions, UpdateState, Action, ofAction } from '@ngxs/store';
+import { AddGuest, ZebraFood, FeedZebra, ResultUser, Guest, RemoveGuest, PageGuest, AddPageGuest, TestAction } from './zoo.actions';
 import { StateContext } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
+import { ofActionDispatched } from '@ngxs/store';
 
 export interface ZooStateModel {
     feed: boolean;
     zebraFood: ZebraFood[];
     pageGuest: PageGuest[];
+    testCount: number;
 }
 
-@State<ZooStateModel>({
-    name: 'zoo',
-    defaults: {
+function initialZooStateModel(): ZooStateModel {
+    return {
         feed: false,
         zebraFood: [],
-        pageGuest: []
-    }
+        pageGuest: [],
+        testCount: 0,
+    };
+}
+@State<ZooStateModel>({
+    name: 'zoo',
+    defaults: initialZooStateModel()
 })
-export class ZooState {
-    constructor(private zooService: ZooService) { }
+
+export class ZooState implements NgxsOnInit {
 
     @Selector() static pageGuest(state: ZooStateModel) {
         return state.pageGuest;
     }
-    @Action(AddGuest, { cancelUncompleted: false })
+
+    constructor(private zooService: ZooService) {
+    }
+
+    ngxsOnInit(ctx: StateContext<ZooStateModel>) {
+        if (!ctx.getState()) {
+            ctx.setState(initialZooStateModel());
+        }
+    }
+
+    @Action(AddGuest, { cancelUncompleted: true })
     addGuest(ctx: StateContext<ZooStateModel>, action: AddGuest) {
         return this.zooService.addGuest().pipe(tap((result: ResultUser) => {
             // add 12k
@@ -83,4 +98,15 @@ export class ZooState {
             ]
         });
     }
+
+    @Action(TestAction)
+    testAction(ctx: StateContext<ZooStateModel>) {
+        console.log('ZooState - TestAction');
+        const state = ctx.getState();
+        ctx.patchState({
+            testCount: state.testCount + 1,
+        });
+    }
 }
+
+

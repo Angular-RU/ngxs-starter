@@ -1,8 +1,15 @@
 <div>
-  <a routerLink='/zoo'>zoo</a>
+  <ul>
+    <li>
+      <a routerLink='/zoo'>zoo</a>
+    </li>
+    <li>
+      <a routerLink='/tickets'>tickets</a>
+    </li>
+  </ul>
 </div>
 <div>
-  <input [(ngModel)]="delay" > sec.
+  <input [(ngModel)]="delay"> sec.
 </div>
 <div>
   <router-outlet></router-outlet>

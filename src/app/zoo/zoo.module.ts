@@ -6,6 +6,7 @@ import { ZooRoutes } from './zoo.routing';
 import { NgxsModule } from '@ngxs/store';
 import { ZooState } from './zoo.state';
 import { FormsModule } from '@angular/forms';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     HttpClientModule,
     ZooRoutes,
-    NgxsModule.forFeature([ZooState])
+    NgxsModule.forFeature([ZooState]),
   ],
   declarations: [ZooComponent],
   entryComponents: [ZooComponent]

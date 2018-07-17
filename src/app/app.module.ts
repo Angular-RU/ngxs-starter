@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppState } from './app.state';
 import { ZooState } from './zoo/zoo.state';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { TicketsState } from './tickets/tickets.state.ts';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
     RouterModule,
     FormsModule,
     AppRoutingModule,
-    NgxsModule.forRoot([AppState]),
+    NgxsModule.forRoot([
+      AppState,
+    ]),
     NgxsLoggerPluginModule.forRoot({
       collapsed: false,
       disabled: environment.production
