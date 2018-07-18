@@ -35,4 +35,7 @@ export class ZooComponent implements OnInit {
   test() {
     this.store.dispatch(new TestAction());
   }
+  testTwo() {
+    this.store.dispatch([new AddPageGuest(), new TestAction()]);
+  }
 }

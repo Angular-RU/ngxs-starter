@@ -8,6 +8,7 @@
 </div>
 <div>
   <button (click)="test()" style="margin: 10px;">test</button>
+  <button (click)="testTwo()" style="margin: 10px;">dispatch 2 Action</button>
   <button (click)="addPage()">addPage</button>
 
   <div *ngFor="let item of (pageGuest$ | async); let pageIndex=index">
