@@ -4,9 +4,10 @@
     <br> {{ticketsState$ | async | json}}
   </p>
   <p>
-    testCount = {{ (ticketsState$ | async)?.testCount}} 
+    testCount = {{ (ticketsState$ | async)?.testCount}}
     <br>
     testCount = {{ testCount$ | async}}
   </p>
 </div>
 <button (click)="test()" style="margin: 10px;">test</button>
+<button (click)="testParalels()" style="margin: 10px;">testParalels</button>

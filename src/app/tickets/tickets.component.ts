@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TicketsState } from './tickets.state.ts';
+import { TicketsState, TestWrite1, TestWrite2 } from './tickets.state.ts';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { TestAction } from '../zoo/zoo.actions';
@@ -21,5 +21,9 @@ export class TicketsComponent implements OnInit {
 
   test() {
     this.store.dispatch(new TestAction());
+  }
+
+  testParalels() {
+    this.store.dispatch([new TestWrite1(), new TestWrite2()]);
   }
 }
